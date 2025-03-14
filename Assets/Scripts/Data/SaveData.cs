@@ -76,6 +76,8 @@ public class SaveData : MonoBehaviour
             if (www.result == UnityWebRequest.Result.Success)
             {
                 string responseTxt = www.downloadHandler.text;
+                Debug.Log(responseTxt);
+                
                 var json = JSON.Parse(responseTxt); // On parse la réponse du serveur pour en faire une liste
 
                 if (json.Count > 0)
