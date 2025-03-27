@@ -39,7 +39,6 @@ public class SaveData : MonoBehaviour
     {
 
         string url = BASEURL + "get";
-        //if (_thisMonth) url += "&month=" + DateTime.Now.Month + "&year=" + DateTime.Now.Year; //Récupère seulement ce mois-ci ou non
 
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {

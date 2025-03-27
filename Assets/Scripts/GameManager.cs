@@ -62,11 +62,12 @@ public class GameManager : MonoBehaviour
         {
             pseudo = PlayerPrefs.GetString("SavedPseudo");
             pseudoCanvas.enabled = false; // Cache l'écran de connexion
-            StartCoroutine(GetAndDisplayLeaderboard()); // Récupère et affiche les scores
+            //StartCoroutine(GetAndDisplayLeaderboard()); // Récupère et affiche les scores
             StartCoroutine(StartCountdown()); // Lancer directement le jeu
         }
         else
         {
+            pseudoCanvas.enabled = true;
             StartCoroutine(GetAndDisplayLeaderboard());
         }
     }
@@ -140,7 +141,7 @@ public class GameManager : MonoBehaviour
     {
         gameOverCanvas.SetActive(true);
 
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
         OnEnableToStart?.Invoke(false);
 
         StartCoroutine(GetAndDisplayLeaderboard());
@@ -189,8 +190,6 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator UpdateHighScore()
     {
-        yield return StartCoroutine(saveManager.GetHighScoreOfThisPlayer(pseudo, (score) => highScore = score)); // Je récupère le highscore de ce player
-
         if(actualScore > highScore)
         {
             yield return StartCoroutine(saveManager.SendScore(pseudo, actualScore));
