@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using System;
+using System.Globalization;
 
 public class LoosePlayMod
 {
@@ -57,11 +58,16 @@ public IEnumerator Game_Over_And_Restart_Test()
     Assert.IsNotNull(retrievedPlayers, "Erreur : Impossible de récupérer les joueurs depuis la BDD.");
     Assert.IsNotEmpty(retrievedPlayers, "La BDD ne contient aucun joueur.");
 
+    string[] formats = { "dd/MM/yyyy", "MM/dd/yyyy", "yyyy-MM-dd", "dd-MM-yyyy" };
     foreach (var player in retrievedPlayers)
     {
         Assert.IsTrue(leaderBoardTxt.text.Contains(player.pseudo), $"Le joueur {player.pseudo} n'est pas affiché dans le leaderboard.");
         Assert.IsTrue(leaderBoardTxt.text.Contains(player.highscore.ToString()), $"Le score du joueur {player.pseudo} n'est pas affiché.");
-        Assert.IsTrue(leaderBoardTxt.text.Contains(DateTime.Parse(player.date).ToString("dd/MM/yyyy")), $"La date du joueur {player.pseudo} n'est pas affichée.");
+        
+        bool success = DateTime.TryParseExact(player.date, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate);
+        Assert.IsTrue(success, $"La date {player.date} n'a pas pu être parsée.");
+        Assert.IsTrue(leaderBoardTxt.text.Contains(parsedDate.ToString("dd/MM/yyyy")), $"La date du joueur {player.pseudo} n'est pas affichée.");
+
     }
 
     // On replay

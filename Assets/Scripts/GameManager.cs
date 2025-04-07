@@ -236,8 +236,11 @@ public class GameManager : MonoBehaviour
         leaderBoardTxt.text = "";
         int rank = 1;
         foreach (var player in sortedPlayers) //Mets les players par ordre vis-à-vis de leur score
-        {
-            if (DateTime.TryParse(player.date, out DateTime parsedDate))
+        {   
+            //Parse la date avec tous les formats possible (a cause de unity dev ops qui atttend un format américain)
+            string[] formats = { "dd/MM/yyyy", "MM/dd/yyyy", "yyyy-MM-dd", "dd-MM-yyyy" };
+            if (DateTime.TryParseExact(player.date, formats, System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None, out DateTime parsedDate))
             {
                 string formattedDate = parsedDate.ToString("dd/MM/yyyy");
                 leaderBoardTxt.text += $"{rank}. {player.pseudo} - {player.highscore} : {formattedDate}\n";
