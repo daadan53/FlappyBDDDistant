@@ -1358,7 +1358,7 @@ GameObject:
   - component: {fileID: 406922608}
   - component: {fileID: 406922607}
   m_Layer: 5
-  m_Name: TextClassement
+  m_Name: TextClassementGO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

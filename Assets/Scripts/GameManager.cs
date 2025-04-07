@@ -13,20 +13,23 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [SerializeField] private SaveData saveManager;
+    public SaveData SaveDataManager => saveManager;
 
     public static event Action<float> OnSetVelocity;
     public static event Action<bool> OnEnableToStart;
 
     [SerializeField] private GameObject gameOverCanvas;
+    public GameObject GameOverCanvas => gameOverCanvas;
     
     int highScore = 0;
     float velocity = 1.3f;
     float timerStart = 3f;
     [SerializeField] TextMeshProUGUI countDownTxt;
 
-    [SerializeField] TMP_InputField pseudoInputField;
+    public TMP_InputField pseudoInputField;
 
     [SerializeField] private Canvas pseudoCanvas;
+    public Canvas PseudoCanvas => pseudoCanvas;
 
     [SerializeField] private TextMeshProUGUI popUpErrorTxt;
     [SerializeField] private TextMeshProUGUI showPseudo;
