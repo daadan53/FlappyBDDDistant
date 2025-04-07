@@ -227,17 +227,25 @@ public class GameManager : MonoBehaviour
         if(thisMonth)
         {
             DateTime currentMonth = DateTime.Now;
-            sortedPlayers = sortedPlayers.Where(player => 
-                DateTime.Parse(player.date).Month == currentMonth.Month &&
-                DateTime.Parse(player.date).Year == currentMonth.Year).ToList();
+            sortedPlayers = sortedPlayers.Where(player =>
+                DateTime.TryParse(player.date, out DateTime parsedDate) &&
+                parsedDate.Month == currentMonth.Month &&
+                parsedDate.Year == currentMonth.Year).ToList();
         }
 
         leaderBoardTxt.text = "";
         int rank = 1;
         foreach (var player in sortedPlayers) //Mets les players par ordre vis-à-vis de leur score
         {
-            string formattedDate = DateTime.Parse(player.date).ToString("dd/MM/yyyy");
-            leaderBoardTxt.text += $"{rank}. {player.pseudo} - {player.highscore} : {formattedDate}\n";
+            if (DateTime.TryParse(player.date, out DateTime parsedDate))
+            {
+                string formattedDate = parsedDate.ToString("dd/MM/yyyy");
+                leaderBoardTxt.text += $"{rank}. {player.pseudo} - {player.highscore} : {formattedDate}\n";
+            }
+            else
+            {
+                leaderBoardTxt.text += $"{rank}. {player.pseudo} - {player.highscore} : Date invalide\n";
+            }
             rank++;
         }
         leaderBoardGOTxt.text = leaderBoardTxt.text;
